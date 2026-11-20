@@ -8,6 +8,11 @@ let selectedCustomer = null;
 let currentTotal = 0;
 let isSaving = false;
 
+document.getElementById("bayar-kartu").readOnly = true;
+document.getElementById("bayar-kartu").style.pointerEvents = "none";
+
+document.getElementById("nomor-kartu").disabled = true;
+
 function renderProductGrid(items) {
     console.log("RENDER DIPANGGIL", items.length);
 
@@ -344,15 +349,40 @@ function hitungKembalianModal() {
 
 //otomatis isi nominal kartu
 document.getElementById("jenis-kartu").addEventListener("change", function () {
+    const bayarTunai = document.getElementById("bayar-tunai");
+
+    const bayarKartu = document.getElementById("bayar-kartu");
+
+    const nomorKartu = document.getElementById("nomor-kartu");
+
     const total = hitungGrandTotalModal();
 
     if (this.value) {
-        document.getElementById("bayar-kartu").value = total;
+        bayarTunai.value = 0;
 
-        document.getElementById("bayar-tunai").value = 0;
+        bayarTunai.disabled = true;
 
-        hitungKembalianModal();
+        bayarKartu.value = total;
+
+        bayarKartu.readOnly = true;
+        bayarKartu.style.pointerEvents = "none";
+
+        nomorKartu.disabled = false;
+    } else {
+        bayarTunai.disabled = false;
+
+        bayarKartu.value = 0;
+
+        bayarKartu.readOnly = true;
+
+        bayarKartu.style.pointerEvents = "none";
+
+        nomorKartu.value = "";
+
+        nomorKartu.disabled = true;
     }
+
+    hitungKembalianModal();
 });
 
 document.getElementById("bayar-tunai").addEventListener("input", function () {
@@ -363,8 +393,10 @@ document.getElementById("bayar-tunai").addEventListener("input", function () {
 
         document.getElementById("nomor-kartu").value = "";
 
-        hitungKembalianModal();
+        document.getElementById("nomor-kartu").disabled = true;
     }
+
+    hitungKembalianModal();
 });
 
 document.getElementById("is-piutang").addEventListener("change", function () {
@@ -566,10 +598,13 @@ function saveTransaction() {
                 document.getElementById("bayar-tunai").disabled = false;
 
                 document.getElementById("bayar-kartu").disabled = false;
+                document.getElementById("bayar-kartu").readOnly = true;
+                document.getElementById("bayar-kartu").style.pointerEvents =
+                    "none";
 
                 document.getElementById("jenis-kartu").disabled = false;
 
-                document.getElementById("nomor-kartu").disabled = false;
+                document.getElementById("nomor-kartu").disabled = true;
 
                 // reset tampilan total
                 document.getElementById("payment-total-nota").innerText =

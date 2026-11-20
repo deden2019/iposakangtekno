@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -16,9 +17,9 @@
 
     <style>
         :root {
-            --primary: #03AC0E;        /* Hijau Tokopedia */
-            --primary-hover: #028a0b;  /* Hijau Gelap Hover */
-            --primary-light: #e8f7e9;  /* Hijau Soft Accent */
+            --primary: #03AC0E;
+            --primary-hover: #028a0b;
+            --primary-light: #e8f7e9;
             --bg-color: #f7f9fa;
             --card-bg: #ffffff;
             --text-dark: #212121;
@@ -37,58 +38,124 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html,
         body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
             background-color: var(--bg-color);
-            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Layout Utama Split Screen */
+        .login-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+            height: 100svh;
+            background: var(--card-bg);
+            overflow: hidden;
+        }
+
+        /* Bagian Kiri (Banner / Ilustrasi) */
+        .login-banner {
+            flex: 1.2;
+            background: linear-gradient(135deg, #03ac0e 0%, #014d06 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .login-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1556742049-0a67d5e0824f?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+            opacity: 0.25;
+            z-index: 1;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            max-width: 500px;
+        }
+
+        .banner-content span {
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .banner-content h1 {
+            font-size: 26px;
+            font-weight: 700;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+        }
+
+        /* Bagian Kanan (Form Section yang bisa di-scroll dengan aman) */
+        .login-form-section {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            background: var(--card-bg);
+            overflow-y: auto;
+            height: 100%;
         }
 
-        /* Container Card Responsive */
         .login-card {
-            background: var(--card-bg);
             width: 100%;
-            max-width: 420px;
-            padding: 40px 32px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+            max-width: 380px;
+            margin: auto;
+            padding: 10px 0;
         }
 
         /* Brand / Header */
         .brand-header {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 16px;
         }
 
         .brand-logo {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 64px;
-            height: 64px;
+            width: 48px;
+            height: 48px;
             background-color: var(--primary-light);
             color: var(--primary);
-            border-radius: 16px;
-            font-size: 28px;
-            margin-bottom: 16px;
+            border-radius: 12px;
+            font-size: 20px;
+            margin-bottom: 8px;
         }
 
         .brand-header h2 {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 6px;
+            margin-bottom: 2px;
             letter-spacing: -0.3px;
         }
 
         .brand-header p {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--text-muted);
-            line-height: 1.5;
+            line-height: 1.3;
         }
 
         /* Alert Session Error */
@@ -96,32 +163,31 @@
             background-color: var(--danger-bg);
             color: var(--danger-text);
             border: 1px solid var(--danger-border);
-            padding: 12px 16px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 20px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            margin-bottom: 12px;
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            line-height: 1.4;
+            gap: 6px;
         }
 
         .alert-error i {
-            font-size: 16px;
+            font-size: 13px;
             margin-top: 1px;
         }
 
         /* Form Group & Inputs */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .form-group label {
             display: block;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 8px;
+            margin-bottom: 3px;
         }
 
         .input-wrapper {
@@ -132,27 +198,22 @@
 
         .input-wrapper i {
             position: absolute;
-            left: 14px;
+            left: 12px;
             color: #9e9e9e;
-            font-size: 16px;
-            transition: color 0.2s;
+            font-size: 14px;
             pointer-events: none;
         }
 
         .form-control {
             width: 100%;
-            padding: 14px 14px 14px 42px;
-            font-size: 14px;
+            padding: 9px 12px 9px 38px;
+            font-size: 12px;
             color: var(--text-dark);
             background-color: #fff;
             border: 1px solid var(--border-color);
-            border-radius: 10px;
+            border-radius: 6px;
             outline: none;
             transition: all 0.2s ease-in-out;
-        }
-
-        .form-control::placeholder {
-            color: #b0b0b0;
         }
 
         .form-control:focus {
@@ -160,61 +221,25 @@
             box-shadow: 0 0 0 3px rgba(3, 172, 14, 0.15);
         }
 
-        .form-control:focus + i {
-            color: var(--primary);
-        }
-
-        /* Extra Options (Remember & Forgot) */
-        .form-options {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 24px;
-            font-size: 13px;
-            gap: 10px;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        select.form-control {
+            padding-left: 12px;
             cursor: pointer;
-            color: var(--text-muted);
-            user-select: none;
-        }
-
-        .remember-me input[type="checkbox"] {
-            accent-color: var(--primary);
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-
-        .forgot-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            white-space: nowrap;
-        }
-
-        .forgot-link:hover {
-            text-decoration: underline;
         }
 
         /* Submit Button */
         .btn-submit {
             width: 100%;
-            padding: 14px;
+            padding: 10px;
             background-color: var(--primary);
             color: #ffffff;
             border: none;
-            border-radius: 10px;
-            font-size: 15px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s ease-in-out, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(3, 172, 14, 0.25);
+            box-shadow: 0 4px 10px rgba(3, 172, 14, 0.2);
+            margin-top: 4px;
         }
 
         .btn-submit:hover {
@@ -227,9 +252,9 @@
 
         /* Footer */
         .login-footer {
-            margin-top: 28px;
+            margin-top: 12px;
             text-align: center;
-            font-size: 13px;
+            font-size: 11px;
             color: var(--text-muted);
         }
 
@@ -244,160 +269,141 @@
         }
 
         /* ===================================================
-           MEDIA QUERIES (OPTIMASI KHUSUS TAMPILAN HP / MOBILE)
-           =================================================== */
-        @media (max-width: 480px) {
-            body {
-                padding: 16px;
-                background-color: #ffffff; /* Mengubah background menjadi putih padat di mobile jika diinginkan */
+            RESPONSIVE DESIGN (MOBILE / TABLET)
+            =================================================== */
+        @media (max-width: 992px) {
+            .login-banner {
+                display: none;
+            }
+
+            .login-form-section {
+                width: 100%;
+                padding: 12px;
                 align-items: flex-start;
+                /* Agar scroll mulai dari paling atas */
             }
 
             .login-card {
-                padding: 24px 16px;
-                box-shadow: none;
-                border: none;
+                max-width: 100%;
+                padding: 10px 5px;
             }
+        }
 
-            .brand-header {
-                margin-bottom: 24px;
-            }
-
-            .brand-logo {
-                width: 56px;
-                height: 56px;
-                font-size: 24px;
-                border-radius: 14px;
-                margin-bottom: 12px;
-            }
-
-            .brand-header h2 {
-                font-size: 20px;
-            }
-
-            .brand-header p {
-                font-size: 12px;
-            }
-
+        @media (max-width: 480px) {
             .form-control {
-                font-size: 15px; /* Mencegah auto-zoom di browser Safari/iOS */
-                padding: 13px 14px 13px 40px;
-            }
-
-            .btn-submit {
-                padding: 15px;
-                font-size: 16px;
+                font-size: 14px;
+                /* Mencegah auto-zoom di iOS */
             }
         }
     </style>
 </head>
+
 <body>
 
-    <div class="login-card">
-        <!-- Logo & Header -->
-        <div class="brand-header">
-            <div class="brand-logo">
-                <i class="fa-solid fa-cart-shopping"></i>
+    <div class="login-container">
+        <!-- Banner Sisi Kiri -->
+        <div class="login-banner">
+            <div class="banner-content">
+                <span>IPOS AkangTekno</span>
+                <h1>Teknologi Kasir Modern yang Melesatkan Pertumbuhan Usaha Anda</h1>
             </div>
-            <h2>akangtekno retail</h2>
-            <p>Silakan masuk menggunakan akun Anda untuk memulai transaksi</p>
         </div>
 
-        <!-- Session Alert Error -->
-        @if(session('error'))
-            <div class="alert-error">
-                <i class="fa-solid fa-circle-exclamation"></i>
-                <span>{{ session('error') }}</span>
-            </div>
-        @endif
+        <!-- Bagian Form Sisi Kanan -->
+        <div class="login-form-section">
+            <div class="login-card">
+                <!-- Logo & Header -->
+                <div class="brand-header">
+                    <div class="brand-logo">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
+                    <h2>IPOS AkangTekno</h2>
+                    <p>Silakan masuk menggunakan akun Anda untuk memulai transaksi</p>
+                </div>
 
-        <!-- Form Login -->
-        <form action="/login" method="POST">
-            @csrf
+                <!-- Session Alert Error -->
+                @if (session('error'))
+                    <div class="alert-error">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>{{ session('error') }}</span>
+                    </div>
+                @endif
 
-            <!-- Input Username -->
-            <div class="form-group">
-                <label for="username">Username</label>
-                <div class="input-wrapper">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Masukkan username" required autofocus autocomplete="username">
-                    <i class="fa-regular fa-user"></i>
+                <!-- Form Login -->
+                <form action="/login" method="POST">
+                    @csrf
+
+                    <!-- Input Username -->
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <div class="input-wrapper">
+                            <input type="text" id="username" name="username" class="form-control"
+                                placeholder="Masukkan username" required autofocus autocomplete="username">
+                            <i class="fa-regular fa-user"></i>
+                        </div>
+                    </div>
+
+                    <!-- Input Password -->
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="password" name="password" class="form-control"
+                                placeholder="Masukkan password" required autocomplete="current-password">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                    </div>
+
+                    <!-- Input Shift -->
+                    <div class="form-group">
+                        <label for="shift_id">Shift</label>
+                        <select id="shift_id" name="shift_id" class="form-control" required>
+                            @foreach ($shift as $s)
+                                <option value="{{ $s->shift_id }}">
+                                    {{ $s->nama_shift }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <!-- Input Saldo Awal -->
+                    <div class="form-group">
+                        <label for="saldo_awal">Saldo Awal</label>
+                        <input type="number" id="saldo_awal" name="saldo_awal" min="1" class="form-control"
+                            placeholder="Masukkan saldo awal">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-submit">
+                        Masuk
+                    </button>
+                </form>
+
+                <!-- Footer -->
+                <div class="login-footer">
+                    Butuh bantuan? <a href="#">Hubungi Admin</a>
                 </div>
             </div>
-
-            <!-- Input Password -->
-            <div class="form-group">
-                <label for="password">Password</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Masukkan password" required autocomplete="current-password">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Shift</label>
-
-                <select
-                    name="shift_id"
-                    class="form-control"
-                    required>
-
-                    @foreach($shift as $s)
-                        <option value="{{ $s->shift_id }}">
-                            {{ $s->nama_shift }}
-                        </option>
-                    @endforeach
-
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Saldo Awal</label>
-
-<input
-    type="number"
-    name="saldo_awal"
-    min="1"
-    class="form-control"
-    placeholder="Masukkan saldo awal">
-            </div>
-
-            <!-- Options -->
-            <!-- <div class="form-options">
-                <label class="remember-me">
-                    <input type="checkbox" name="remember"> Ingat Saya
-                </label>
-                <a href="#" class="forgot-link">Lupa Password?</a>
-            </div> -->
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn-submit">
-                Masuk
-            </button>
-        </form>
-
-        <!-- Footer -->
-        <div class="login-footer">
-            Butuh bantuan? <a href="#">Hubungi Admin</a>
         </div>
     </div>
-@if($errors->any())
-<script>
-Swal.fire({
-    icon: 'warning',
-    title: 'Peringatan',
-    text: '{{ $errors->first() }}'
-});
 
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: '{{ $errors->first() }}'
+            });
+        </script>
+    @endif
 
-</script>
-@endif
-<script>
-    console.log(
-        "%c © 2026 akangtekno. All rights reserved. %c \nInformasi Kontak: support@akangtekno.id | Lisensi Resmi Terdaftar.",
-        "background: #1e1e3f; color: #38bdf8; padding: 6px 12px; font-weight: bold; border-radius: 4px 0 0 4px; font-size: 13px;",
-        "background: #0f172a; color: #94a3b8; padding: 6px 12px; border-radius: 0 4px 4px 0; font-size: 12px;"
-    );
-</script>
+    <script>
+        console.log(
+            "%c © 2026 akangtekno. All rights reserved. %c \nInformasi Kontak: support@akangtekno.id | Lisensi Resmi Terdaftar.",
+            "background: #1e1e3f; color: #38bdf8; padding: 6px 12px; font-weight: bold; border-radius: 4px 0 0 4px; font-size: 13px;",
+            "background: #0f172a; color: #94a3b8; padding: 6px 12px; border-radius: 0 4px 4px 0; font-size: 12px;"
+        );
+    </script>
 
 </body>
+
 </html>
